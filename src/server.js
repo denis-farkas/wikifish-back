@@ -12,20 +12,27 @@ console.log("PORT:", process.env.PORT);
 
 // Création de l'application Express
 const app = express();
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      const allowedOrigins = ["http://localhost:5173"];
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, origin); // Return the actual origin, not true
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-    optionsSuccessStatus: 200,
-  })
-);
+const cors = require("cors");
+
+const allowedOrigins = [
+  "https://www.wikifish.horizonduweb.fr",
+  "https://wikifish.horizonduweb.fr",
+  "http://localhost:3012",
+  "http://127.0.0.1:3012",
+  "http://82.165.231.216:3012",
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 // Initialisation des middlewares (gestionnaires intermédiaires)
