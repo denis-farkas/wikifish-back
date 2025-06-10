@@ -12,7 +12,6 @@ console.log("PORT:", process.env.PORT);
 
 // Création de l'application Express
 const app = express();
-const cors = require("cors");
 
 const allowedOrigins = [
   "https://www.wikifish.horizonduweb.fr",
